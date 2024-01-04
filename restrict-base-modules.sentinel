@@ -1,23 +1,19 @@
-# Import the tfconfig/v2 import, but use the alias "tfconfig"
 import "tfconfig/v2" as tfconfig
-
-# Import the tfrun import
 import "tfrun"
-
-# Standard strings import
 import "strings"
 
 ### Parameters ###
 param base_modules_prefix
 param approved_project_prefix
 
-# Find modules called from root module that are not in the desired PMR
+# Find modules that start with the configured base_modules_prefix but are not in an approved project
+# starting with approved_project_prefix
 violatingMCs = filter tfconfig.module_calls as index, mc {
   (strings.has_prefix(mc.name, base_modules_prefix) and
   not strings.has_prefix(tfrun.project.name, approved_project_prefix))
 }
 
-# Print violation messages for invalid modules
+# Print violation messages
 if length(violatingMCs) > 0 and not tfrun.is_destroy {
   print("Base modules should not be called from the root module in non-development Projects.")
   for violatingMCs as address, mc {
