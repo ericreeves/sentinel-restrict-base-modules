@@ -5,5 +5,6 @@ The purpose of this Sentinel policy is to restrict modules based upon Module Nam
 The module has two parameters:
 
 base_modules_prefix: The prefix of base/core Modules that should not directly be utilized in a given Project.
-param approved_project_prefix: The prefix of Project names that should be allowed to utilize base/core Modules.
+
+approved_project_prefix: The prefix of Project names that should be allowed to utilize base/core Modules.
 
